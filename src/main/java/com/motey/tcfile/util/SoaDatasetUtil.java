@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.teamcenter.soaictstubs.ICCTDataset;
+import com.teamcenter.soaictstubs.StringHolder;
 import org.apache.commons.io.FileUtils;
 
 import com.teamcenter.services.loose.core._2006_03.FileManagement.GetDatasetWriteTicketsInputData;
@@ -17,14 +19,15 @@ import com.teamcenter.soa.client.model.ServiceData;
 import com.teamcenter.soa.client.model.Type;
 import com.teamcenter.soa.client.model.strong.Dataset;
 import com.teamcenter.soa.client.model.strong.ImanFile;
-import com.teamcenter.soaictstubs.ICCTDataset;
-import com.teamcenter.soaictstubs.StringHolder;
+
+//import com.teamcenter.soaictstubs.ICCTDataset;
+//import com.teamcenter.soaictstubs.StringHolder;
 
 public class SoaDatasetUtil {
-	
+
 	public static HashMap<String, String[]> dsTypes = new HashMap<>();
 	public static String[] DEFAULT_DSTYPE = new String[] { "CAEAnalysisDS", "CAEAnalysisData" };
-	private static Object lastErrorMsg;
+	private String lastErrorMsg;
 	static {
 		// key ： 文件后缀	value ： String[]{所用工具， 引用}
 		dsTypes.put("xls", new String[]{"MSExcel", "excel"});
@@ -72,7 +75,11 @@ public class SoaDatasetUtil {
 		this.soaSession = soaSession;
 		this.propertyManager = soaSession.getPropertyManager();
 	}
-	
+
+	public String getLastErrorMsg() {
+		return lastErrorMsg;
+	}
+
 	public List<ImanFile> getImanFiles(ModelObject dataset) throws Exception{
 		
 		ModelObject[] refs = propertyManager.getModelObjectArrayProperty(dataset, "ref_list");

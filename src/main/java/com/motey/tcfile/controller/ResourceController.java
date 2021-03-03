@@ -44,7 +44,10 @@ public class ResourceController {
 		}
 
 		String path = datasetUtil.download((ImanFile) modelObject, resourceUtil.getUploadFolder());
-
+		if(path == null){
+			String fmsHome = System.getenv("FMS_HOME");
+			throw new Exception("Current FMS_HOME is ["+fmsHome + "];\n" + datasetUtil.getLastErrorMsg());
+		}
 		return "redirect:" + resourceUtil.getResourceUrl(path, false);
 	}
 	

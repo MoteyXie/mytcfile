@@ -115,7 +115,7 @@ public class SoaItemUtil {
                 maxRev = mo;
                 continue;
             }
-            if(maxRevId.compareToIgnoreCase(revId) > 0){
+            if(maxRevId.compareToIgnoreCase(revId) < 0){
                 maxRevId = revId;
                 maxRev = mo;
             }

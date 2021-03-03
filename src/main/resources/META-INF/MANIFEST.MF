@@ -1,218 +1,195 @@
 Manifest-Version: 1.0
 Main-Class: com.motey.tcfile.TcFileApplication
-Class-Path: spring-jcl-5.3.3.jar spring-context-5.3.3.jar logback-core-1
- .2.3.jar spring-jdbc-5.3.3.jar jackson-core-2.11.4.jar mybatis-spring-b
- oot-starter-2.1.4.jar tomcat-embed-core-9.0.41.jar spring-boot-starter-
- logging-2.4.2.jar spring-tx-5.3.3.jar spring-boot-starter-tomcat-2.4.2.
- jar mybatis-3.5.6.jar spring-boot-starter-jdbc-2.4.2.jar HikariCP-3.4.5
- .jar mybatis-spring-boot-autoconfigure-2.1.4.jar jackson-annotations-2.
- 11.4.jar mybatis-spring-2.0.6.jar jakarta.el-3.0.3.jar jackson-databind
- -2.11.4.jar spring-boot-starter-json-2.4.2.jar jackson-datatype-jsr310-
- 2.11.4.jar spring-boot-starter-2.4.2.jar spring-boot-devtools-2.4.2.jar
-  jackson-datatype-jdk8-2.11.4.jar slf4j-api-1.7.30.jar tomcat-embed-web
- socket-9.0.41.jar spring-boot-autoconfigure-2.4.2.jar spring-core-5.3.3
- .jar spring-expression-5.3.3.jar spring-boot-configuration-processor-2.
- 4.2.jar log4j.jar jacorb.jar xerces.jar resolver.jar xml-apis.jar fcccl
- ient.jar fscclient.jar icctstubs.jar logkit-1.2.jar xercesImpl.jar comm
- ons-codec.jar tcgatewaystubs.jar tctp_11000.2.0.jar commons-logging.jar
-  tcmemjavabinding.jar tcserverjavabinding.jar TcSoaClient_11000.2.0.jar
-  TcSoaCommon_11000.2.0.jar teamcenter_sso_applib.jar teamcenter_sso_com
- mon.jar avalon-framework-4.1.5.jar commons-httpclient-3.1.jar TcSoaAiLo
- ose_11000.2.0.jar TcSoaAiTypes_11000.2.0.jar TcSoaAiStrong_11000.2.0.ja
- r TcSoaBomLoose_11000.2.0.jar TcSoaBomTypes_11000.2.0.jar TcSoaCadLoose
- _11000.2.0.jar TcSoaCadTypes_11000.2.0.jar TcSoaCaeLoose_11000.2.0.jar 
- TcSoaCaeTypes_11000.2.0.jar TcSoaMESLoose_11000.2.0.jar TcSoaMESTypes_1
- 1000.2.0.jar TcSoaRdvLoose_11000.2.0.jar TcSoaRdvTypes_11000.2.0.jar Tc
- SoaBomStrong_11000.2.0.jar TcSoaCadStrong_11000.2.0.jar TcSoaCaeStrong_
- 11000.2.0.jar TcSoaCoreLoose_11000.2.0.jar TcSoaCoreTypes_11000.2.0.jar
-  TcSoaMESStrong_11000.2.0.jar TcSoaRdvStrong_11000.2.0.jar Lis0SoaLdfLo
- ose_11000.2.0.jar Lis0SoaLdfTypes_11000.2.0.jar org.apache.commons.io_1
- .4.jar TcSoaCoreStrong_11000.2.0.jar TcSoaQueryLoose_11000.2.0.jar TcSo
- aQueryTypes_11000.2.0.jar teamcenter_sso_webtoolkit.jar Lis0SoaLdfStron
- g_11000.2.0.jar TcSoaQueryStrong_11000.2.0.jar TcSoaStrongModel_11000.2
- .0.jar TcSoaAsBuiltLoose_11000.2.0.jar TcSoaAsBuiltTypes_11000.2.0.jar 
- TcSoaMROCoreLoose_11000.2.0.jar TcSoaMROCoreTypes_11000.2.0.jar TcSoaRe
- portsLoose_11000.2.0.jar TcSoaReportsTypes_11000.2.0.jar Asp0SoaAspectL
- oose_11000.2.0.jar Asp0SoaAspectTypes_11000.2.0.jar Cba1SoaCbaExtLoose_
- 11000.2.0.jar Cba1SoaCbaExtTypes_11000.2.0.jar Fnd0SoaWProxyLoose_11000
- .2.0.jar Fnd0SoaWProxyTypes_11000.2.0.jar TcSoaAsBuiltStrong_11000.2.0.
- jar TcSoaMROCoreStrong_11000.2.0.jar TcSoaReportsStrong_11000.2.0.jar T
- cSoaStrongModelCm_11000.2.0.jar TcSoaWorkflowLoose_11000.2.0.jar TcSoaW
- orkflowTypes_11000.2.0.jar Asp0SoaAspectStrong_11000.2.0.jar CAE0SoaSim
- ProcLoose_11000.2.0.jar CAE0SoaSimProcTypes_11000.2.0.jar Cba1SoaCbaExt
- Strong_11000.2.0.jar Cpd0SoaCpdCoreLoose_11000.2.0.jar Cpd0SoaCpdCoreTy
- pes_11000.2.0.jar Esm0SoaESMBaseLoose_11000.2.0.jar Esm0SoaESMBaseTypes
- _11000.2.0.jar Fnd0SoaWProxyStrong_11000.2.0.jar Nxc0SoaTcinCpdLoose_11
- 000.2.0.jar Nxc0SoaTcinCpdTypes_11000.2.0.jar TcSoaMultisiteLoose_11000
- .2.0.jar TcSoaMultisiteTypes_11000.2.0.jar TcSoaStrongModelCba_11000.2.
- 0.jar TcSoaStrongModelDpv_11000.2.0.jar TcSoaStrongModelGmo_11000.2.0.j
- ar TcSoaStrongModelHrn_11000.2.0.jar TcSoaStrongModelMES_11000.2.0.jar 
- TcSoaWorkflowStrong_11000.2.0.jar CAE0SoaSimProcStrong_11000.2.0.jar Cp
- d0SoaCpdCoreStrong_11000.2.0.jar Esm0SoaESMBaseStrong_11000.2.0.jar Fnd
- 0SoaUiConfigLoose_11000.2.0.jar Fnd0SoaUiConfigTypes_11000.2.0.jar Mei0
- SoaMESIntegLoose_11000.2.0.jar Mei0SoaMESIntegTypes_11000.2.0.jar Nxc0S
- oaTcinCpdStrong_11000.2.0.jar Scp0SoaSubsCmplLoose_11000.2.0.jar Scp0So
- aSubsCmplTypes_11000.2.0.jar TcSoaMultisiteStrong_11000.2.0.jar TcSoaSt
- rongModelCcdm_11000.2.0.jar TcSoaStrongModelEmps_11000.2.0.jar TcSoaStr
- ongModelScdt_11000.2.0.jar TcSoaStrongModelTcae_11000.2.0.jar TcSoaSvcR
- equestLoose_11000.2.0.jar TcSoaSvcRequestTypes_11000.2.0.jar Fnd0SoaUiC
- onfigStrong_11000.2.0.jar Lgt0SoaLogisticsLoose_11000.2.0.jar Lgt0SoaLo
- gisticsTypes_11000.2.0.jar Lis0SoaStrongModelLdf_11000.2.0.jar Mdl0SoaM
- odelCoreLoose_11000.2.0.jar Mdl0SoaModelCoreTypes_11000.2.0.jar Mdo0Soa
- StrongModelMdo_11000.2.0.jar Mei0SoaMESIntegStrong_11000.2.0.jar Ptn0So
- aPartitionLoose_11000.2.0.jar Ptn0SoaPartitionTypes_11000.2.0.jar Scp0S
- oaSubsCmplStrong_11000.2.0.jar TcSoaAllocationsLoose_11000.2.0.jar TcSo
- aAllocationsTypes_11000.2.0.jar TcSoaStrongModelCpdCm_11000.2.0.jar TcS
- oaStrongModelEsddm_11000.2.0.jar TcSoaStrongModelGmdpv_11000.2.0.jar Tc
- SoaStrongModelScmCc_11000.2.0.jar TcSoaSvcRequestStrong_11000.2.0.jar T
- cSoaTranslationLoose_11000.2.0.jar TcSoaTranslationTypes_11000.2.0.jar 
- TcSoaWireHarnessLoose_11000.2.0.jar TcSoaWireHarnessTypes_11000.2.0.jar
-  Lgt0SoaLogisticsStrong_11000.2.0.jar Mdl0SoaModelCoreStrong_11000.2.0.
- jar Ptn0SoaPartitionStrong_11000.2.0.jar TcSoaAllocationsStrong_11000.2
- .0.jar TcSoaAsMaintainedLoose_11000.2.0.jar TcSoaAsMaintainedTypes_1100
- 0.2.0.jar TcSoaContMgmtBaseLoose_11000.2.0.jar TcSoaContMgmtBaseTypes_1
- 1000.2.0.jar TcSoaImportExportLoose_11000.2.0.jar TcSoaImportExportType
- s_11000.2.0.jar TcSoaStrongModelCbaExt_11000.2.0.jar TcSoaStrongModelFp
- Mgmt_11000.2.0.jar TcSoaStrongModelPkgArt_11000.2.0.jar TcSoaTranslatio
- nStrong_11000.2.0.jar TcSoaWireHarnessStrong_11000.2.0.jar com.teamcent
- er.rac.util_11000.2.0.jar Dia0SoaDiagrammingLoose_11000.2.0.jar Dia0Soa
- DiagrammingTypes_11000.2.0.jar Fnd0SoaDiagrammingLoose_11000.2.0.jar Fn
- d0SoaDiagrammingTypes_11000.2.0.jar Fnd0SoaEditContextLoose_11000.2.0.j
- ar Fnd0SoaEditContextTypes_11000.2.0.jar Rlz0SoaRealizationLoose_11000.
- 2.0.jar Rlz0SoaRealizationTypes_11000.2.0.jar TcSoaAsMaintainedStrong_1
- 1000.2.0.jar TcSoaConfigurationLoose_11000.2.0.jar TcSoaConfigurationTy
- pes_11000.2.0.jar TcSoaContMgmtBaseStrong_11000.2.0.jar TcSoaImportExpo
- rtStrong_11000.2.0.jar TcSoaManufacturingLoose_11000.2.0.jar TcSoaManuf
- acturingTypes_11000.2.0.jar TcSoaStrongModelAcadGmo_11000.2.0.jar TcSoa
- StrongModelAsBuilt_11000.2.0.jar TcSoaStrongModelCmtEbop_11000.2.0.jar 
- TcSoaStrongModelCpdCore_11000.2.0.jar TcSoaStrongModelEsmBase_11000.2.0
- .jar TcSoaStrongModelMROCore_11000.2.0.jar TcSoaStrongModelSpecMgr_1100
- 0.2.0.jar TcSoaSvcProcessingLoose_11000.2.0.jar TcSoaSvcProcessingTypes
- _11000.2.0.jar TcSoaVisualizationLoose_11000.2.0.jar TcSoaVisualization
- Types_11000.2.0.jar Asp0SoaStrongModelAspect_11000.2.0.jar Cba1SoaStron
- gModelCbaExt_11000.2.0.jar Cfg0SoaConfiguratorLoose_11000.2.0.jar Cfg0S
- oaConfiguratorTypes_11000.2.0.jar Dia0SoaDiagrammingStrong_11000.2.0.ja
- r Fnd0SoaAuditManagerLoose_11000.2.0.jar Fnd0SoaAuditManagerTypes_11000
- .2.0.jar Fnd0SoaDiagrammingStrong_11000.2.0.jar Fnd0SoaEditContextStron
- g_11000.2.0.jar Fnd0SoaNotificationLoose_11000.2.0.jar Fnd0SoaNotificat
- ionTypes_11000.2.0.jar Mat1SoaMaterialMgmtLoose_11000.2.0.jar Mat1SoaMa
- terialMgmtTypes_11000.2.0.jar Rlz0SoaRealizationStrong_11000.2.0.jar Tc
- SoaAdministrationLoose_11000.2.0.jar TcSoaAdministrationTypes_11000.2.0
- .jar TcSoaClassificationLoose_11000.2.0.jar TcSoaClassificationTypes_11
- 000.2.0.jar TcSoaConfigurationStrong_11000.2.0.jar TcSoaManufacturingSt
- rong_11000.2.0.jar TcSoaSrmIntegrationLoose_11000.2.0.jar TcSoaSrmInteg
- rationTypes_11000.2.0.jar TcSoaStrongModelBrndMgmt_11000.2.0.jar TcSoaS
- trongModelEsddmScm_11000.2.0.jar TcSoaStrongModelFnshmgmt_11000.2.0.jar
-  TcSoaStrongModelSubsCmpl_11000.2.0.jar TcSoaSvcProcessingStrong_11000.
- 2.0.jar TcSoaVisualizationStrong_11000.2.0.jar Ads0SoaAdsFoundationLoos
- e_11000.2.0.jar Ads0SoaAdsFoundationTypes_11000.2.0.jar Cfg0SoaConfigur
- atorStrong_11000.2.0.jar com.teamcenter.rac.aifrcp_11000.2.0.jar com.te
- amcenter.rac.kernel_11000.2.0.jar Fdp0SoaFourDPlanningLoose_11000.2.0.j
- ar Fdp0SoaFourDPlanningTypes_11000.2.0.jar Fnd0SoaAuditManagerStrong_11
- 000.2.0.jar Fnd0SoaNotificationStrong_11000.2.0.jar Fnd0SoaQualificatio
- nLoose_11000.2.0.jar Fnd0SoaQualificationTypes_11000.2.0.jar Mat1SoaMat
- erialMgmtStrong_11000.2.0.jar Mci0SoaPMIManagementLoose_11000.2.0.jar M
- ci0SoaPMIManagementTypes_11000.2.0.jar Mdo0SoaMDOManagementLoose_11000.
- 2.0.jar Mdo0SoaMDOManagementTypes_11000.2.0.jar SSS0SoaSvcSchedulingLoo
- se_11000.2.0.jar SSS0SoaSvcSchedulingTypes_11000.2.0.jar TcSoaAdministr
- ationStrong_11000.2.0.jar TcSoaAsbAsmAlignmentLoose_11000.2.0.jar TcSoa
- AsbAsmAlignmentTypes_11000.2.0.jar TcSoaBusinessModelerLoose_11000.2.0.
- jar TcSoaBusinessModelerTypes_11000.2.0.jar TcSoaCadBomAlignmentLoose_1
- 1000.2.0.jar TcSoaCadBomAlignmentTypes_11000.2.0.jar TcSoaClassificatio
- nStrong_11000.2.0.jar TcSoaGlobalMultiSiteLoose_11000.2.0.jar TcSoaGlob
- alMultiSiteTypes_11000.2.0.jar TcSoaIssueManagementLoose_11000.2.0.jar 
- TcSoaIssueManagementTypes_11000.2.0.jar TcSoaSrmIntegrationStrong_11000
- .2.0.jar TcSoaStrongModelCmtPadTwp_11000.2.0.jar TcSoaStrongModelEdaSer
- ver_11000.2.0.jar TcSoaStrongModelModelCore_11000.2.0.jar TcSoaStrongMo
- delPartition_11000.2.0.jar Tm0SoaTestManagementLoose_11000.2.0.jar Tm0S
- oaTestManagementTypes_11000.2.0.jar Ads0SoaAdsFoundationStrong_11000.2.
- 0.jar Att0SoaAttrTargetMgmtLoose_11000.2.0.jar Att0SoaAttrTargetMgmtTyp
- es_11000.2.0.jar Fdp0SoaFourDPlanningStrong_11000.2.0.jar Fnd0SoaQualif
- icationStrong_11000.2.0.jar Mci0SoaPMIManagementStrong_11000.2.0.jar Md
- c0SoaMDConnectivityLoose_11000.2.0.jar Mdc0SoaMDConnectivityTypes_11000
- .2.0.jar Mdo0SoaMDOManagementStrong_11000.2.0.jar Mei0SoaStrongModelMES
- Integ_11000.2.0.jar SSS0SoaSvcSchedulingStrong_11000.2.0.jar TcSoaAsbAs
- mAlignmentStrong_11000.2.0.jar TcSoaBusinessModelerStrong_11000.2.0.jar
-  TcSoaCadBomAlignmentStrong_11000.2.0.jar TcSoaChangeManagementLoose_11
- 000.2.0.jar TcSoaChangeManagementTypes_11000.2.0.jar TcSoaGlobalMultiSi
- teStrong_11000.2.0.jar TcSoaIssueManagementStrong_11000.2.0.jar TcSoaSt
- rongModelEdaLibrary_11000.2.0.jar TcSoaVendorManagementLoose_11000.2.0.
- jar TcSoaVendorManagementTypes_11000.2.0.jar Tm0SoaTestManagementStrong
- _11000.2.0.jar WdM0SoaWeldManagementLoose_11000.2.0.jar WdM0SoaWeldMana
- gementTypes_11000.2.0.jar Att0SoaAttrTargetMgmtStrong_11000.2.0.jar Clr
- 0SoaColorAppearanceLoose_11000.2.0.jar Clr0SoaColorAppearanceTypes_1100
- 0.2.0.jar Clr1SoaStrongModelColorRule_11000.2.0.jar Lgt0SoaStrongModelL
- ogistics_11000.2.0.jar Mdc0SoaMDConnectivityStrong_11000.2.0.jar Sci0So
- aIMDSIntegrationLoose_11000.2.0.jar Sci0SoaIMDSIntegrationTypes_11000.2
- .0.jar TcSoaChangeManagementStrong_11000.2.0.jar TcSoaProjectManagement
- Loose_11000.2.0.jar TcSoaProjectManagementTypes_11000.2.0.jar TcSoaStro
- ngModelCmtEmserver_11000.2.0.jar TcSoaStrongModelDiagramming_11000.2.0.
- jar TcSoaStrongModelEsmSoftware_11000.2.0.jar TcSoaStrongModelRealizati
- on_11000.2.0.jar TcSoaVendorManagementStrong_11000.2.0.jar WdM0SoaWeldM
- anagementStrong_11000.2.0.jar Civ0SoaContMgmtS1000D40Loose_11000.2.0.ja
- r Civ0SoaContMgmtS1000D40Types_11000.2.0.jar Clr0SoaColorAppearanceStro
- ng_11000.2.0.jar Sci0SoaIMDSIntegrationStrong_11000.2.0.jar TcSoaCalend
- arManagementLoose_11000.2.0.jar TcSoaCalendarManagementTypes_11000.2.0.
- jar TcSoaDocumentManagementLoose_11000.2.0.jar TcSoaDocumentManagementT
- ypes_11000.2.0.jar TcSoaProjectManagementStrong_11000.2.0.jar TcSoaStro
- ngModelAsMaintained_11000.2.0.jar TcSoaStrongModelContmgmtBase_11000.2.
- 0.jar TcSoaStrongModelContmgmtDita_11000.2.0.jar TcSoaStrongModelCpgMat
- erials_11000.2.0.jar TcSoaStrongModelEsmProcessor_11000.2.0.jar TcSoaSt
- rongModelMaterialMgmt_11000.2.0.jar TcSoaSystemsEngineeringLoose_11000.
- 2.0.jar TcSoaSystemsEngineeringTypes_11000.2.0.jar Cbm0SoaStrongModelCo
- lorBomPmm_11000.2.0.jar Civ0SoaContMgmtS1000D40Strong_11000.2.0.jar Lbr
- 0SoaLibraryManagementLoose_11000.2.0.jar Lbr0SoaLibraryManagementTypes_
- 11000.2.0.jar SAS0SoaSvcAutoSchedulingLoose_11000.2.0.jar SAS0SoaSvcAut
- oSchedulingTypes_11000.2.0.jar TcSoaCalendarManagementStrong_11000.2.0.
- jar TcSoaDocumentManagementStrong_11000.2.0.jar TcSoaParameterManagemen
- tLoose_11000.2.0.jar TcSoaParameterManagementTypes_11000.2.0.jar TcSoaS
- trongModelAdsFoundation_11000.2.0.jar TcSoaStrongModelStockMaterial_110
- 00.2.0.jar TcSoaStructureManagementLoose_11000.2.0.jar TcSoaStructureMa
- nagementTypes_11000.2.0.jar TcSoaSystemsEngineeringStrong_11000.2.0.jar
-  Apb0SoaStrongModelAttrParmBase_11000.2.0.jar Cdm0SoaContractManagement
- Loose_11000.2.0.jar Cdm0SoaContractManagementTypes_11000.2.0.jar Cfg0So
- aStrongModelConfigurator_11000.2.0.jar Cls0SoaClassificationCoreLoose_1
- 1000.2.0.jar Cls0SoaClassificationCoreTypes_11000.2.0.jar Crt0SoaValida
- tionContractLoose_11000.2.0.jar Crt0SoaValidationContractTypes_11000.2.
- 0.jar Lbr0SoaLibraryManagementStrong_11000.2.0.jar SAS0SoaSvcAutoSchedu
- lingStrong_11000.2.0.jar SSF0SoaServiceForecastingLoose_11000.2.0.jar S
- SF0SoaServiceForecastingTypes_11000.2.0.jar TcSoaAuthorizedDataAccessLo
- ose_11000.2.0.jar TcSoaAuthorizedDataAccessTypes_11000.2.0.jar TcSoaPar
- ameterManagementStrong_11000.2.0.jar TcSoaProductionManagementLoose_110
- 00.2.0.jar TcSoaProductionManagementTypes_11000.2.0.jar TcSoaStrongMode
- lContmgmtS1000d_11000.2.0.jar TcSoaStrongModelMDConnectivity_11000.2.0.
- jar TcSoaStrongModelProductVariant_11000.2.0.jar TcSoaStrongModelServic
- eRequest_11000.2.0.jar TcSoaStrongModelWeldManagement_11000.2.0.jar TcS
- oaStructureManagementStrong_11000.2.0.jar Cdm0SoaContractManagementStro
- ng_11000.2.0.jar Cls0SoaClassificationCoreStrong_11000.2.0.jar com.team
- center.rac.util.testing_11000.2.0.jar Crt0SoaValidationContractStrong_1
- 1000.2.0.jar Fdp0SoaStrongModelFourDPlanning_11000.2.0.jar Mci0SoaStron
- gModelPMIManagement_11000.2.0.jar SSF0SoaServiceForecastingStrong_11000
- .2.0.jar TcSoaAuthorizedDataAccessStrong_11000.2.0.jar TcSoaProductionM
- anagementStrong_11000.2.0.jar TcSoaStrongModelIssueManagement_11000.2.0
- .jar TcSoaStrongModelPenetrationmgmt_11000.2.0.jar Tm0SoaStrongModelTes
- tManagement_11000.2.0.jar Att0SoaStrongModelAttrTargetMgmt_11000.2.0.ja
- r Fnd0SoaConfigFilterCriteriaLoose_11000.2.0.jar Fnd0SoaConfigFilterCri
- teriaTypes_11000.2.0.jar TcSoaRequirementsManagementLoose_11000.2.0.jar
-  TcSoaRequirementsManagementTypes_11000.2.0.jar TcSoaStrongModelContmgm
- tS1000d40_11000.2.0.jar TcSoaStrongModelPlp0ProdLinePlan_11000.2.0.jar 
- TcSoaStrongModelVendorManagement_11000.2.0.jar Clr0SoaStrongModelColorA
- ppearance_11000.2.0.jar com.teamcenter.rac.kernel.testing_11000.2.0.jar
-  Fnd0SoaConfigFilterCriteriaStrong_11000.2.0.jar TcSoaRequirementsManag
- ementStrong_11000.2.0.jar TcSoaStrongModelLibraryManagement_11000.2.0.j
- ar TcSoaStrongModelServiceProcessing_11000.2.0.jar TcSoaStrongModelClas
- sificationCore_11000.2.0.jar SSS0SoaStrongModelServiceScheduling_11000.
- 2.0.jar TcSoaStrongModelAdsChangeManagement_11000.2.0.jar TcSoaStrongMo
- delSci0IMDSIntegration_11000.2.0.jar Crt0SoaStrongModelValidationContra
- ct_11000.2.0.jar SSF0SoaStrongModelServiceForecasting_11000.2.0.jar com
- .teamcenter.rac.aif.registryeditor_11000.2.0.jar TcSoaStrongModelTransa
- ctionProcessing_11000.2.0.jar TcSoaStrongModelWorkPackageManagement_110
- 00.2.0.jar TcSoaStrongModelCdm0ContractManagement_11000.2.0.jar TcSoaSt
- rongModelServiceEventManagement_11000.2.0.jar SAS0SoaStrongModelService
- AutomatedScheduling_11000.2.0.jar jakarta.annotation-api-1.3.5.jar log4
- j-api-2.13.3.jar jackson-module-parameter-names-2.11.4.jar spring-beans
- -5.3.3.jar spring-boot-starter-web-2.4.2.jar spring-web-5.3.3.jar log4j
- -to-slf4j-2.13.3.jar snakeyaml-1.27.jar spring-aop-5.3.3.jar jul-to-slf
- 4j-1.7.30.jar spring-webmvc-5.3.3.jar spring-boot-2.4.2.jar logback-cla
- ssic-1.2.3.jar ojdbc8-19.8.0.0.jar
+Class-Path: ojdbc8-19.8.0.0.jar spring-boot-devtools-2.4.2.jar spring-co
+ re-5.3.3.jar spring-tx-5.3.3.jar HikariCP-3.4.5.jar log4j-to-slf4j-2.13
+ .3.jar spring-boot-2.4.2.jar logback-classic-1.2.3.jar spring-boot-star
+ ter-logging-2.4.2.jar spring-expression-5.3.3.jar jul-to-slf4j-1.7.30.j
+ ar log4j-api-2.13.3.jar spring-boot-starter-tomcat-2.4.2.jar slf4j-api-
+ 1.7.30.jar mybatis-3.5.6.jar jackson-annotations-2.11.4.jar spring-cont
+ ext-5.3.3.jar spring-boot-starter-web-2.4.2.jar spring-jdbc-5.3.3.jar m
+ ybatis-spring-boot-autoconfigure-2.1.4.jar jakarta.el-3.0.3.jar logback
+ -core-1.2.3.jar spring-boot-configuration-processor-2.4.2.jar spring-bo
+ ot-starter-jdbc-2.4.2.jar jackson-module-parameter-names-2.11.4.jar spr
+ ing-boot-starter-2.4.2.jar spring-aop-5.3.3.jar spring-boot-starter-jso
+ n-2.4.2.jar jackson-datatype-jdk8-2.11.4.jar jackson-core-2.11.4.jar lo
+ g4j.jar jacorb.jar resolver.jar xml-apis.jar fccclient.jar fscclient.ja
+ r logkit-1.2.jar serializer.jar xercesImpl.jar commons-codec.jar httpco
+ re-4.4.4.jar tcgatewaystubs.jar tctp_12000.0.0.jar commons-logging.jar 
+ log4j-api-2.8.2.jar com.soaicctstubs.jar httpclient-4.5.2.jar log4j-cor
+ e-2.8.2.jar tcmemjavabinding.jar tcserverjavabinding.jar xmlrpc-client-
+ 3.1.3.jar xmlrpc-common-3.1.3.jar xmlrpc-server-3.1.3.jar TcSoaClient_1
+ 2000.0.0.jar TcSoaCommon_12000.0.0.jar teamcenter_sso_applib.jar teamce
+ nter_sso_common.jar ws-commons-util-1.0.2.jar avalon-framework-4.1.5.ja
+ r TcSoaAiLoose_12000.0.0.jar TcSoaAiStrong_12000.0.0.jar TcSoaBomLoose_
+ 12000.0.0.jar TcSoaCadLoose_12000.0.0.jar TcSoaCaeLoose_12000.0.0.jar T
+ cSoaMESLoose_12000.0.0.jar TcSoaRdvLoose_12000.0.0.jar TcSoaBomStrong_1
+ 2000.0.0.jar TcSoaCadStrong_12000.0.0.jar TcSoaCaeStrong_12000.0.0.jar 
+ TcSoaCoreLoose_12000.0.0.jar TcSoaMESStrong_12000.0.0.jar TcSoaRdvStron
+ g_12000.0.0.jar Lis0SoaLdfLoose_12000.0.0.jar org.apache.commons.io_1.4
+ .jar TcSoaCoreStrong_12000.0.0.jar TcSoaQueryLoose_12000.0.0.jar teamce
+ nter_sso_ldapcustom.jar teamcenter_sso_webtoolkit.jar Lis0SoaLdfStrong_
+ 12000.0.0.jar TcSoaQueryStrong_12000.0.0.jar TcSoaStrongModel_12000.0.0
+ .jar TcSoaAsBuiltLoose_12000.0.0.jar TcSoaMROCoreLoose_12000.0.0.jar Tc
+ SoaReportsLoose_12000.0.0.jar Asp0SoaAspectLoose_12000.0.0.jar Cba1SoaC
+ baExtLoose_12000.0.0.jar Fnd0SoaWProxyLoose_12000.0.0.jar TcSoaAsBuiltS
+ trong_12000.0.0.jar TcSoaMROCoreStrong_12000.0.0.jar TcSoaReportsStrong
+ _12000.0.0.jar TcSoaStrongModelCm_12000.0.0.jar TcSoaWorkflowLoose_1200
+ 0.0.0.jar Asp0SoaAspectStrong_12000.0.0.jar Bom0SoaBomCoreLoose_12000.0
+ .0.jar CAE0SoaSimProcLoose_12000.0.0.jar Cba1SoaCbaExtStrong_12000.0.0.
+ jar Cpd0SoaCpdCoreLoose_12000.0.0.jar Esm0SoaESMBaseLoose_12000.0.0.jar
+  Fnd0SoaWProxyStrong_12000.0.0.jar Nxc0SoaTcinCpdLoose_12000.0.0.jar Tc
+ SoaMultisiteLoose_12000.0.0.jar TcSoaStrongModelCba_12000.0.0.jar TcSoa
+ StrongModelDpv_12000.0.0.jar TcSoaStrongModelGmo_12000.0.0.jar TcSoaStr
+ ongModelHrn_12000.0.0.jar TcSoaStrongModelMES_12000.0.0.jar TcSoaStrong
+ ModelPMI_12000.0.0.jar TcSoaWorkflowStrong_12000.0.0.jar Bom0SoaBomCore
+ Strong_12000.0.0.jar CAE0SoaSimProcStrong_12000.0.0.jar commons-httpcli
+ ent-contrib-3.1.jar Cpd0SoaCpdCoreStrong_12000.0.0.jar Esm0SoaESMBaseSt
+ rong_12000.0.0.jar Fnd0SoaUiConfigLoose_12000.0.0.jar Mei0SoaMESIntegLo
+ ose_12000.0.0.jar Nxc0SoaTcinCpdStrong_12000.0.0.jar TcSoaMultisiteStro
+ ng_12000.0.0.jar TcSoaStrongModelCcdm_12000.0.0.jar TcSoaStrongModelEmp
+ s_12000.0.0.jar TcSoaStrongModelScdt_12000.0.0.jar TcSoaStrongModelTcae
+ _12000.0.0.jar TcSoaSvcRequestLoose_12000.0.0.jar Fnd0SoaUiConfigStrong
+ _12000.0.0.jar Lgt0SoaLogisticsLoose_12000.0.0.jar Lis0SoaStrongModelLd
+ f_12000.0.0.jar Mdl0SoaModelCoreLoose_12000.0.0.jar Mdo0SoaStrongModelM
+ do_12000.0.0.jar Mei0SoaMESIntegStrong_12000.0.0.jar Ptn0SoaPartitionLo
+ ose_12000.0.0.jar TcSoaAllocationsLoose_12000.0.0.jar TcSoaStrongModelE
+ sddm_12000.0.0.jar TcSoaStrongModelScmCc_12000.0.0.jar TcSoaSvcRequestS
+ trong_12000.0.0.jar TcSoaTranslationLoose_12000.0.0.jar TcSoaWireHarnes
+ sLoose_12000.0.0.jar Lgt0SoaLogisticsStrong_12000.0.0.jar Mdl0SoaModelC
+ oreStrong_12000.0.0.jar Ptn0SoaPartitionStrong_12000.0.0.jar TcSoaAlloc
+ ationsStrong_12000.0.0.jar TcSoaAsMaintainedLoose_12000.0.0.jar TcSoaCo
+ ntMgmtBaseLoose_12000.0.0.jar TcSoaImportExportLoose_12000.0.0.jar TcSo
+ aStrongModelFpMgmt_12000.0.0.jar TcSoaStrongModelPkgArt_12000.0.0.jar T
+ cSoaTranslationStrong_12000.0.0.jar TcSoaWireHarnessStrong_12000.0.0.ja
+ r Cbm0SoaColorBomPmmLoose_12000.0.0.jar com.teamcenter.rac.util_12000.0
+ .0.jar Dia0SoaDiagrammingLoose_12000.0.0.jar Fnd0SoaDiagrammingLoose_12
+ 000.0.0.jar Fnd0SoaEditContextLoose_12000.0.0.jar Lrm0SoaStrongModelLis
+ rm_12000.0.0.jar Oo1SoaOfficeOnlineLoose_12000.0.0.jar Rlz0SoaRealizati
+ onLoose_12000.0.0.jar TcSoaAsMaintainedStrong_12000.0.0.jar TcSoaConfig
+ urationLoose_12000.0.0.jar TcSoaContMgmtBaseStrong_12000.0.0.jar TcSoaI
+ mportExportStrong_12000.0.0.jar TcSoaManufacturingLoose_12000.0.0.jar T
+ cSoaStrongModelAsBuilt_12000.0.0.jar TcSoaStrongModelCmtEbop_12000.0.0.
+ jar TcSoaStrongModelCpdCore_12000.0.0.jar TcSoaStrongModelEsmBase_12000
+ .0.0.jar TcSoaStrongModelMROCore_12000.0.0.jar TcSoaStrongModelNX0tcin_
+ 12000.0.0.jar TcSoaStrongModelNXP0pid_12000.0.0.jar TcSoaStrongModelSpe
+ cMgr_12000.0.0.jar TcSoaSvcProcessingLoose_12000.0.0.jar TcSoaVisualiza
+ tionLoose_12000.0.0.jar Asp0SoaStrongModelAspect_12000.0.0.jar Cbm0SoaC
+ olorBomPmmStrong_12000.0.0.jar Cfg0SoaConfiguratorLoose_12000.0.0.jar D
+ ia0SoaDiagrammingStrong_12000.0.0.jar Esw0SoaStrongModelEsmgmt_12000.0.
+ 0.jar Fnd0SoaAuditManagerLoose_12000.0.0.jar Fnd0SoaDiagrammingStrong_1
+ 2000.0.0.jar Fnd0SoaEditContextStrong_12000.0.0.jar Fnd0SoaNotification
+ Loose_12000.0.0.jar Les0SoaStrongModelLisesm_12000.0.0.jar Mat1SoaMater
+ ialMgmtLoose_12000.0.0.jar Oo1SoaOfficeOnlineStrong_12000.0.0.jar Pmg0S
+ oaStrongModelCpMgmt_12000.0.0.jar Prg0SoaProgramInfraLoose_12000.0.0.ja
+ r Rlz0SoaRealizationStrong_12000.0.0.jar TcSoaAdministrationLoose_12000
+ .0.0.jar TcSoaClassificationLoose_12000.0.0.jar TcSoaConfigurationStron
+ g_12000.0.0.jar TcSoaManufacturingStrong_12000.0.0.jar TcSoaSrmIntegrat
+ ionLoose_12000.0.0.jar TcSoaStrongModelBrndMgmt_12000.0.0.jar TcSoaStro
+ ngModelFnshmgmt_12000.0.0.jar TcSoaSvcProcessingStrong_12000.0.0.jar Tc
+ SoaVisualizationStrong_12000.0.0.jar Val0SoaNXValidationLoose_12000.0.0
+ .jar Ads0SoaAdsFoundationLoose_12000.0.0.jar Aps0SoaStrongModelApsCore_
+ 12000.0.0.jar CAE0SoaStrongModelSimProc_12000.0.0.jar Cfg0SoaConfigurat
+ orStrong_12000.0.0.jar com.teamcenter.rac.aifrcp_12000.0.0.jar com.team
+ center.rac.kernel_12000.0.0.jar Fdp0SoaFourDPlanningLoose_12000.0.0.jar
+  Fnd0SoaAuditManagerStrong_12000.0.0.jar Fnd0SoaNotificationStrong_1200
+ 0.0.0.jar Fnd0SoaQualificationLoose_12000.0.0.jar Mat1SoaMaterialMgmtSt
+ rong_12000.0.0.jar Mci0SoaPMIManagementLoose_12000.0.0.jar Mdo0SoaMDOMa
+ nagementLoose_12000.0.0.jar Osl0SoaStrongModelLISOSLC_12000.0.0.jar Prg
+ 0SoaProgramInfraStrong_12000.0.0.jar SSS0SoaSvcSchedulingLoose_12000.0.
+ 0.jar TcSoaAdministrationStrong_12000.0.0.jar TcSoaAsbAsmAlignmentLoose
+ _12000.0.0.jar TcSoaBusinessModelerLoose_12000.0.0.jar TcSoaCadBomAlign
+ mentLoose_12000.0.0.jar TcSoaClassificationStrong_12000.0.0.jar TcSoaGl
+ obalMultiSiteLoose_12000.0.0.jar TcSoaIssueManagementLoose_12000.0.0.ja
+ r TcSoaSrmIntegrationStrong_12000.0.0.jar TcSoaStrongModelCmtPadTwp_120
+ 00.0.0.jar TcSoaStrongModelEdaServer_12000.0.0.jar TcSoaStrongModelIssu
+ emgmt_12000.0.0.jar TcSoaStrongModelModelCore_12000.0.0.jar TcSoaStrong
+ ModelPartition_12000.0.0.jar Tm0SoaTestManagementLoose_12000.0.0.jar Va
+ l0SoaNXValidationStrong_12000.0.0.jar Ads0SoaAdsFoundationStrong_12000.
+ 0.0.jar Att0SoaAttrTargetMgmtLoose_12000.0.0.jar Fdp0SoaFourDPlanningSt
+ rong_12000.0.0.jar Fnd0SoaQualificationStrong_12000.0.0.jar Mci0SoaPMIM
+ anagementStrong_12000.0.0.jar Mdc0SoaMDConnectivityLoose_12000.0.0.jar 
+ Mdo0SoaMDOManagementStrong_12000.0.0.jar Mei0SoaStrongModelMESInteg_120
+ 00.0.0.jar SSS0SoaSvcSchedulingStrong_12000.0.0.jar TcSoaAsbAsmAlignmen
+ tStrong_12000.0.0.jar TcSoaBusinessModelerStrong_12000.0.0.jar TcSoaCad
+ BomAlignmentStrong_12000.0.0.jar TcSoaChangeManagementLoose_12000.0.0.j
+ ar TcSoaGlobalMultiSiteStrong_12000.0.0.jar TcSoaIssueManagementStrong_
+ 12000.0.0.jar TcSoaStrongModelEdaLibrary_12000.0.0.jar TcSoaVendorManag
+ ementLoose_12000.0.0.jar Tm0SoaTestManagementStrong_12000.0.0.jar WdM0S
+ oaWeldManagementLoose_12000.0.0.jar Att0SoaAttrTargetMgmtStrong_12000.0
+ .0.jar Clr0SoaColorAppearanceLoose_12000.0.0.jar Clr1SoaStrongModelColo
+ rRule_12000.0.0.jar Cp0SoaStrongModelComposites_12000.0.0.jar Lgt0SoaSt
+ rongModelLogistics_12000.0.0.jar Mdc0SoaMDConnectivityStrong_12000.0.0.
+ jar TcSoaChangeManagementStrong_12000.0.0.jar TcSoaProjectManagementLoo
+ se_12000.0.0.jar TcSoaStrongModelCmtEmserver_12000.0.0.jar TcSoaStrongM
+ odelDiagramming_12000.0.0.jar TcSoaStrongModelEsmSoftware_12000.0.0.jar
+  TcSoaStrongModelRealization_12000.0.0.jar TcSoaVendorManagementStrong_
+ 12000.0.0.jar WdM0SoaWeldManagementStrong_12000.0.0.jar Bhv0SoaBranchFo
+ undationLoose_12000.0.0.jar Civ0SoaContMgmtS1000D40Loose_12000.0.0.jar 
+ Clr0SoaColorAppearanceStrong_12000.0.0.jar TcSoaCalendarManagementLoose
+ _12000.0.0.jar TcSoaDocumentManagementLoose_12000.0.0.jar TcSoaProjectM
+ anagementStrong_12000.0.0.jar TcSoaStrongModelAsMaintained_12000.0.0.ja
+ r TcSoaStrongModelContmgmtBase_12000.0.0.jar TcSoaStrongModelContmgmtDi
+ ta_12000.0.0.jar TcSoaStrongModelCpgMaterials_12000.0.0.jar TcSoaStrong
+ ModelEsmProcessor_12000.0.0.jar TcSoaStrongModelMaterialMgmt_12000.0.0.
+ jar TcSoaStrongModelMesIssueMgmt_12000.0.0.jar TcSoaSystemsEngineeringL
+ oose_12000.0.0.jar Tgm0SoaTargetManagementLoose_12000.0.0.jar Bhv0SoaBr
+ anchFoundationStrong_12000.0.0.jar Cbm0SoaStrongModelColorBomPmm_12000.
+ 0.0.jar Civ0SoaContMgmtS1000D40Strong_12000.0.0.jar Lbr0SoaLibraryManag
+ ementLoose_12000.0.0.jar SAS0SoaSvcAutoSchedulingLoose_12000.0.0.jar Tc
+ SoaCalendarManagementStrong_12000.0.0.jar TcSoaDocumentManagementStrong
+ _12000.0.0.jar TcSoaParameterManagementLoose_12000.0.0.jar TcSoaStrongM
+ odelAdsFoundation_12000.0.0.jar TcSoaStrongModelStockMaterial_12000.0.0
+ .jar TcSoaStructureManagementLoose_12000.0.0.jar TcSoaSystemsEngineerin
+ gStrong_12000.0.0.jar Tgm0SoaTargetManagementStrong_12000.0.0.jar Apb0S
+ oaStrongModelAttrParmBase_12000.0.0.jar Cdm0SoaContractManagementLoose_
+ 12000.0.0.jar Cfg0SoaStrongModelConfigurator_12000.0.0.jar Cfg1SoaStron
+ gModelConfigurator_12000.0.0.jar Cls0SoaClassificationCoreLoose_12000.0
+ .0.jar Crt0SoaValidationContractLoose_12000.0.0.jar Lbr0SoaLibraryManag
+ ementStrong_12000.0.0.jar Prg0SoaStrongModelProgramInfra_12000.0.0.jar 
+ Prg1SoaProgramPlanningAppLoose_12000.0.0.jar SAS0SoaSvcAutoSchedulingSt
+ rong_12000.0.0.jar SSF0SoaServiceForecastingLoose_12000.0.0.jar TcSoaAu
+ thorizedDataAccessLoose_12000.0.0.jar TcSoaParameterManagementStrong_12
+ 000.0.0.jar TcSoaProductionManagementLoose_12000.0.0.jar TcSoaStrongMod
+ elContmgmtS1000d_12000.0.0.jar TcSoaStrongModelMDConnectivity_12000.0.0
+ .jar TcSoaStrongModelProductVariant_12000.0.0.jar TcSoaStrongModelServi
+ ceRequest_12000.0.0.jar TcSoaStrongModelSmdsysmodeling_12000.0.0.jar Tc
+ SoaStrongModelWeldManagement_12000.0.0.jar TcSoaStructureManagementStro
+ ng_12000.0.0.jar Val0SoaStrongModelNXValidation_12000.0.0.jar Cdm0SoaCo
+ ntractManagementStrong_12000.0.0.jar Cls0SoaClassificationCoreStrong_12
+ 000.0.0.jar com.teamcenter.rac.util.testing_12000.0.0.jar Crt0SoaValida
+ tionContractStrong_12000.0.0.jar Fdp0SoaStrongModelFourDPlanning_12000.
+ 0.0.jar Mci0SoaStrongModelPMIManagement_12000.0.0.jar Prg1SoaProgramPla
+ nningAppStrong_12000.0.0.jar Smc0SoaStrongModelPsMcfgSupport_12000.0.0.
+ jar SSF0SoaServiceForecastingStrong_12000.0.0.jar TcSoaAuthorizedDataAc
+ cessStrong_12000.0.0.jar TcSoaProductionManagementStrong_12000.0.0.jar 
+ TcSoaStrongModelPenetrationmgmt_12000.0.0.jar TcSoaStrongModelSSPSPRAli
+ gnment_12000.0.0.jar Tm0SoaStrongModelTestManagement_12000.0.0.jar Att0
+ SoaStrongModelAttrTargetMgmt_12000.0.0.jar Fnd0SoaConfigFilterCriteriaL
+ oose_12000.0.0.jar TcSoaRequirementsManagementLoose_12000.0.0.jar TcSoa
+ StrongModelContmgmtS1000d40_12000.0.0.jar TcSoaStrongModelPlp0ProdLineP
+ lan_12000.0.0.jar TcSoaStrongModelVendorManagement_12000.0.0.jar Clr0So
+ aStrongModelColorAppearance_12000.0.0.jar com.teamcenter.rac.kernel.tes
+ ting_12000.0.0.jar Fnd0SoaConfigFilterCriteriaStrong_12000.0.0.jar Ord0
+ SoaStrongModelOrderManagement_12000.0.0.jar SSP0SoaStrongModelServicePl
+ anning_12000.0.0.jar TcSoaRequirementsManagementStrong_12000.0.0.jar Tc
+ SoaStrongModelLibraryManagement_12000.0.0.jar TcSoaStrongModelServicePr
+ ocessing_12000.0.0.jar Bhv0SoaStrongModelBranchfoundation_12000.0.0.jar
+  Pdg0SoaStrongModelPtnDesignGdlines_12000.0.0.jar TcSoaStrongModelClass
+ ificationCore_12000.0.0.jar TcSoaStrongModelSystemsEngineering_12000.0.
+ 0.jar Tgm0SoaStrongModelTargetManagement_12000.0.0.jar SSS0SoaStrongMod
+ elServiceScheduling_12000.0.0.jar TcSoaStrongModelAdsChangeManagement_1
+ 2000.0.0.jar Crt0SoaStrongModelValidationContract_12000.0.0.jar Prg1Soa
+ StrongModelProgramPlanningApp_12000.0.0.jar SSF0SoaStrongModelServiceFo
+ recasting_12000.0.0.jar com.teamcenter.rac.aif.registryeditor_12000.0.0
+ .jar Srh0SoaStrongModelApsConfiguredSearch_12000.0.0.jar TcSoaStrongMod
+ elTransactionProcessing_12000.0.0.jar TcSoaStrongModelWorkPackageManage
+ ment_12000.0.0.jar TcSoaStrongModelCdm0ContractManagement_12000.0.0.jar
+  TcSoaStrongModelServiceEventManagement_12000.0.0.jar Ssm0SoaStrongMode
+ lSystemSynthesisModeling_12000.0.0.jar Aed0SoaStrongModelAutomationElec
+ tricDesign_12000.0.0.jar jakarta.annotation-api-1.3.5.jar jackson-datab
+ ind-2.11.4.jar tomcat-embed-websocket-9.0.41.jar spring-webmvc-5.3.3.ja
+ r spring-jcl-5.3.3.jar mybatis-spring-2.0.6.jar spring-web-5.3.3.jar sp
+ ring-boot-autoconfigure-2.4.2.jar mybatis-spring-boot-starter-2.1.4.jar
+  tomcat-embed-core-9.0.41.jar jackson-datatype-jsr310-2.11.4.jar snakey
+ aml-1.27.jar spring-beans-5.3.3.jar
 

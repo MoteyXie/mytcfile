@@ -2,6 +2,8 @@ package com.motey.tcfile.controller;
 
 import com.motey.tcfile.TeamcenterContext;
 import com.motey.tcfile.model.JLAskDrawingFromPartResponse;
+import com.motey.tcfile.model.JLAskDrawingFromPartResponses;
+import com.motey.tcfile.model.X_DATA_TBL;
 import com.motey.tcfile.util.*;
 import com.teamcenter.soa.client.model.ModelObject;
 import com.teamcenter.soa.client.model.strong.Dataset;
@@ -119,11 +121,15 @@ public class JLTCController {
      * @throws Exception
      */
     @RequestMapping(value = "/askDrawingFromJLParts")
-    public List<JLAskDrawingFromPartResponse> askDrawingFromParts(String partNo) throws Exception {
+    public JLAskDrawingFromPartResponses askDrawingFromParts(String partNo) throws Exception {
+
+        JLAskDrawingFromPartResponses responses = new JLAskDrawingFromPartResponses();
+
         partNo = partNo.replace("，", ",");
         String[] partNos = partNo.split(",");
 
         List<JLAskDrawingFromPartResponse> responseList = new ArrayList<>();
+        boolean allSuccess = true;
         for (String apartNo : partNos) {
             apartNo = apartNo.replace("\\", "/");
 
@@ -133,9 +139,16 @@ public class JLTCController {
 
             JLAskDrawingFromPartResponse resp = askDrawingFromPart(no, revId);
             responseList.add(resp);
+            if(!"S".equals(resp.getState())){
+                allSuccess = false;
+            }
         }
 
-        return responseList;
+        X_DATA_TBL xdt = new X_DATA_TBL();
+        xdt.setX_DATA_TBL_ITEM(responseList);
+        responses.setX_DATA_TBL(xdt);
+        responses.setX_RETURN_STATUS(allSuccess ? "S":"E");
+        return responses;
     }
 
     @RequestMapping(value = "/askDrawingFromJLPart")
@@ -158,7 +171,7 @@ public class JLTCController {
         if (item == null) {
             //查询结果为空时的处理
             response.setErrorMsg("物料编码【" + partNo + "】未找到");
-            response.setState("error");
+            response.setState("E");
             return response;
         } else {
 
@@ -177,7 +190,7 @@ public class JLTCController {
             if (itemRevision == null) {
                 //itemRevision为空时的处理
                 response.setErrorMsg("物料编码【" + partNo + "】下未找到可用版本。");
-                response.setState("error");
+                response.setState("E");
                 return response;
             }
 
@@ -191,10 +204,13 @@ public class JLTCController {
             //ModelObject[] designRevisions = propertyManager.getModelObjectArrayProperty(itemRevision, "TC_Is_Represented_By");
             //TODO 获取之前先判断物料关联的图纸有几个？如果有多个的话就不继续了
             String partDesc = propertyManager.getStringProperty(itemRevision, "object_desc");
+            System.out.println("partDesc " + partDesc);
             String drawNo = null;
             try {
-                drawNo = partDesc.split("/")[1];
+//              String temp = partDesc.substring(partDesc.indexOf("\\")+1);
+                drawNo = partDesc.split("\\\\")[1];
             } catch (Exception e) {
+
             }
 
             ModelObject designItem = drawNo == null || drawNo.isEmpty() ? null : itemUtil.findItem(drawNo);
@@ -202,7 +218,7 @@ public class JLTCController {
             if (designItem == null) {
                 //关联图纸对象为空时的处理
                 response.setErrorMsg("未找到关联图纸");
-                response.setState("error");
+                response.setState("W");
                 return response;
             }
 
@@ -220,7 +236,7 @@ public class JLTCController {
 
             if (relateds == null || relateds.size() == 0) {
                 response.setErrorMsg("图纸【" + designStr + "】未找到关联图纸数据集");
-                response.setState("error");
+                response.setState("W");
                 return response;
             }
 
@@ -252,7 +268,7 @@ public class JLTCController {
                                 params.put("uid", imanFile.getUid());
                                 String url = resourceUtil.getHttpUrl("showImanFile", params);
 //                                return "redirect:" + url;
-                                response.setState("succeed");
+                                response.setState("S");
                                 response.setUrl(url);
                                 return response;
                             }
@@ -262,7 +278,7 @@ public class JLTCController {
             }
         }
         response.setErrorMsg("无法找到对应资源！");
-        response.setState("error");
+        response.setState("E");
         return response;
     }
 }

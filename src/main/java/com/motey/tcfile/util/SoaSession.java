@@ -69,6 +69,7 @@ public class SoaSession {
 	public User login(String id, String password) throws InvalidCredentialsException {
 		SessionService sessionService = SessionService.getService(connection);
     	LoginResponse out = sessionService.login(id, password, "", "","", "SoaAppX");
+//    	sessionService.refreshPOMCachePerRequest(true);
     	this.user = out.user;
 
         return user;
