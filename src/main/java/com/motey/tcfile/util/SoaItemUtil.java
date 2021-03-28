@@ -1,8 +1,10 @@
 package com.motey.tcfile.util;
 
+import com.sun.org.apache.xerces.internal.impl.PropertyManager;
 import com.teamcenter.services.internal.loose.core._2011_06.ICT.Arg;
 import com.teamcenter.services.internal.loose.core.ICTService;
 import com.teamcenter.services.internal.loose.core._2011_06.ICT;
+import com.teamcenter.services.strong.core.SessionService;
 import com.teamcenter.services.strong.core._2009_10.DataManagement;
 import com.teamcenter.services.strong.core.DataManagementService;
 import com.teamcenter.soa.client.model.ModelObject;
@@ -101,15 +103,55 @@ public class SoaItemUtil {
 
     public ItemRevision getLatestItemRevision2(Item item) throws Exception {
 
+//        SessionService.getService(soaSession.getConnection()).refreshPOMCachePerRequest(true);
+
+        soaSession.getPropertyManager().refreshObject(item);
+
         soaSession.getPropertyManager().getProperty(item,"revision_list");
 
         ModelObject[] revisions = item.get_revision_list();
 
         String maxRevId = null;
         ModelObject maxRev = null;
-
+        SoaPropertyManager pm = soaSession.getPropertyManager();
         for (ModelObject mo: revisions) {
-            String revId = soaSession.getPropertyManager().getStringProperty(mo, "item_revision_id");
+
+            String revId = pm.getStringProperty(mo, "item_revision_id");
+
+            if(maxRevId == null){
+                maxRevId = revId;
+                maxRev = mo;
+                continue;
+            }
+            if(maxRevId.compareToIgnoreCase(revId) < 0){
+                maxRevId = revId;
+                maxRev = mo;
+            }
+        }
+
+        return (ItemRevision) maxRev;
+    }
+
+    public ItemRevision getLatestReleasedItemRevision(Item item) throws Exception {
+
+        soaSession.getPropertyManager().refreshObject(item);
+
+        soaSession.getPropertyManager().getProperty(item,"revision_list");
+
+        ModelObject[] revisions = item.get_revision_list();
+        ModelObject[] status = null;
+        String maxRevId = null;
+        ModelObject maxRev = null;
+        SoaPropertyManager pm = soaSession.getPropertyManager();
+        pm.refreshObjects(revisions);
+        for (ModelObject mo: revisions) {
+
+            String revId = pm.getStringProperty(mo, "item_revision_id");
+
+            status = pm.getModelObjectArrayProperty(mo, "release_status_list");
+
+            if(status == null || status.length == 0)continue;
+
             if(maxRevId == null){
                 maxRevId = revId;
                 maxRev = mo;

@@ -202,6 +202,11 @@ public class SoaPropertyManager {
 		Property property = getProperty(object, propertyName);
 		return property.getModelObjectListValue();
 	}
+
+	public ModelObject[] getRepresented_By(ModelObject object) throws NotLoadedException{
+		refreshObjects(new ModelObject[]{object});
+		return getModelObjectArrayProperty(object,"TC_Is_Represented_By");
+	}
 	
 	public ModelObject[] getContents(ModelObject object) throws NotLoadedException{
 		return getModelObjectArrayProperty(object, "contents");

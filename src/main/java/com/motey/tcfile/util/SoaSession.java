@@ -18,10 +18,11 @@ public class SoaSession {
 	private Connection connection;
 	private AppXCredentialManager credentialManager;
 	private User user;
-	private SoaPropertyManager propertyManager;
-	
-	
-//	public Connection defaultConnect() {
+	private SoaPropertyManager propertyManager;;
+    private SessionService sessionService;
+
+
+    //	public Connection defaultConnect() {
 //		return connect("tcserver", "7001");
 //	}
 //	
@@ -67,13 +68,18 @@ public class SoaSession {
 	}
 	
 	public User login(String id, String password) throws InvalidCredentialsException {
-		SessionService sessionService = SessionService.getService(connection);
+		sessionService = SessionService.getService(connection);
     	LoginResponse out = sessionService.login(id, password, "", "","", "SoaAppX");
-//    	sessionService.refreshPOMCachePerRequest(true);
+    	sessionService.refreshPOMCachePerRequest(true);
     	this.user = out.user;
 
         return user;
 	}
+
+
+	public void refreshCache(){
+        sessionService.refreshPOMCachePerRequest(true);
+    }
 	
 	public User getUser() {
 		return user;
