@@ -2,6 +2,8 @@ package com.motey.tcfile.controller;
 
 import com.motey.tcfile.TeamcenterContext;
 import com.motey.tcfile.model.JLAskDrawingFromPartResponse;
+import com.motey.tcfile.model.JLAskDrawingFromPartResponses;
+import com.motey.tcfile.model.X_DATA_TBL;
 import com.motey.tcfile.util.*;
 import com.teamcenter.soa.client.model.ModelObject;
 import com.teamcenter.soa.client.model.strong.Dataset;
@@ -119,11 +121,15 @@ public class JLTCController {
      * @throws Exception
      */
     @RequestMapping(value = "/askDrawingFromJLParts")
-    public List<JLAskDrawingFromPartResponse> askDrawingFromParts(String partNo) throws Exception {
+    public JLAskDrawingFromPartResponses askDrawingFromParts(String partNo) throws Exception {
+
+        JLAskDrawingFromPartResponses responses = new JLAskDrawingFromPartResponses();
+
         partNo = partNo.replace("，", ",");
         String[] partNos = partNo.split(",");
 
         List<JLAskDrawingFromPartResponse> responseList = new ArrayList<>();
+        boolean allSuccess = true;
         for (String apartNo : partNos) {
             apartNo = apartNo.replace("\\", "/");
 
@@ -133,9 +139,16 @@ public class JLTCController {
 
             JLAskDrawingFromPartResponse resp = askDrawingFromPart(no, revId);
             responseList.add(resp);
+            if(!"S".equals(resp.getState())){
+                allSuccess = false;
+            }
         }
 
-        return responseList;
+        X_DATA_TBL xdt = new X_DATA_TBL();
+        xdt.setX_DATA_TBL_ITEM(responseList);
+        responses.setX_DATA_TBL(xdt);
+        responses.setX_RETURN_STATUS(allSuccess ? "S":"E");
+        return responses;
     }
 
     @RequestMapping(value = "/askDrawingFromJLPart")
@@ -150,7 +163,7 @@ public class JLTCController {
                 teamcenterContext.getTc_port(),
                 teamcenterContext.getUser(),
                 teamcenterContext.getPass());
-
+        soaSession.refreshCache();
         SoaItemUtil itemUtil = new SoaItemUtil(soaSession);
 
         Item item = itemUtil.findItem(partNo);
@@ -158,7 +171,7 @@ public class JLTCController {
         if (item == null) {
             //查询结果为空时的处理
             response.setErrorMsg("物料编码【" + partNo + "】未找到");
-            response.setState("error");
+            response.setState("E");
             return response;
         } else {
 
@@ -177,7 +190,7 @@ public class JLTCController {
             if (itemRevision == null) {
                 //itemRevision为空时的处理
                 response.setErrorMsg("物料编码【" + partNo + "】下未找到可用版本。");
-                response.setState("error");
+                response.setState("E");
                 return response;
             }
 
@@ -185,30 +198,61 @@ public class JLTCController {
             String name = propertyManager.getStringProperty(itemRevision, "object_name");
             String itemRevisionId = propertyManager.getStringProperty(itemRevision, "item_revision_id");
 
-            System.out.println("ItemRevision is " + name);
+            System.out.println("PartRevision is " +itemId+"/"+itemRevisionId+":"+name);
+            String drawNo = null;
 
+            //先通过图料关联关系查找图纸,如果没有搭建图料关系通过物料描述的第二段进行查找
+            soaSession.getPropertyManager().refreshObject(itemRevision);
+            ModelObject[] designObjects = propertyManager.getRepresented_By(itemRevision);
+            if (designObjects.length>1){
+                response.setErrorMsg("物料编码【" + partNo + "】关联了多个图纸。");
+                response.setState("M");
+                return response;
+            }if(designObjects.length ==1){
+                soaSession.getPropertyManager().refreshObject(designObjects[0]);
+                drawNo = propertyManager.getStringProperty(designObjects[0],"item_id");
+                String type = propertyManager.getProperty(designObjects[0],"object_type").getStringValue();
+                System.out.println("图纸类型：" + type);
+                if(type.equals("K8_EDesignRevision")){
+                    response.setErrorMsg("图纸ID【" + drawNo + "】为工程图，类型错误。");
+                    response.setState("W");
+                    return response;
+                }
+            }else{
+                String partDesc = propertyManager.getStringProperty(itemRevision, "object_desc");
+//              System.out.println("partDesc " + partDesc);
+                try {
+//              String temp = partDesc.substring(partDesc.indexOf("\\")+1);
+                    drawNo = partDesc.split("\\\\")[1];
+                } catch (Exception e) {
+
+                }
+            }
             //改成坚朗专用的图纸对象获取方式
             //ModelObject[] designRevisions = propertyManager.getModelObjectArrayProperty(itemRevision, "TC_Is_Represented_By");
             //TODO 获取之前先判断物料关联的图纸有几个？如果有多个的话就不继续了
-            String partDesc = propertyManager.getStringProperty(itemRevision, "object_desc");
-            String drawNo = null;
-            try {
-                drawNo = partDesc.split("/")[1];
-            } catch (Exception e) {
-            }
 
             ModelObject designItem = drawNo == null || drawNo.isEmpty() ? null : itemUtil.findItem(drawNo);
+
+//            propertyManager.refreshObject(designItem);
 
             if (designItem == null) {
                 //关联图纸对象为空时的处理
                 response.setErrorMsg("未找到关联图纸");
-                response.setState("error");
+                response.setState("W");
                 return response;
             }
 
-            //TODO 现在是获取图纸的最大版本，可能要调整图纸的版本获取规则
-            ItemRevision designRevision = itemUtil.getLatestItemRevision2((Item)designItem);
-
+            //获取最大已发布版本
+            soaSession.getPropertyManager().refreshObject(designItem);
+            ItemRevision designRevision = itemUtil.getLatestReleasedItemRevision((Item)designItem);
+            if (designRevision == null) {
+                //关联图纸对象为空时的处理
+                response.setErrorMsg("未找到已发布的图纸版本");
+                response.setState("W");
+                return response;
+            }
+            soaSession.getPropertyManager().refreshObject(designRevision);
             String designRevNo = propertyManager.getStringProperty(designRevision, "item_revision_id");
             String designName = propertyManager.getStringProperty(designRevision, "object_name");
             String designStr = propertyManager.getStringProperty(designRevision, "object_string");
@@ -220,7 +264,7 @@ public class JLTCController {
 
             if (relateds == null || relateds.size() == 0) {
                 response.setErrorMsg("图纸【" + designStr + "】未找到关联图纸数据集");
-                response.setState("error");
+                response.setState("W");
                 return response;
             }
 
@@ -252,7 +296,7 @@ public class JLTCController {
                                 params.put("uid", imanFile.getUid());
                                 String url = resourceUtil.getHttpUrl("showImanFile", params);
 //                                return "redirect:" + url;
-                                response.setState("succeed");
+                                response.setState("S");
                                 response.setUrl(url);
                                 return response;
                             }
@@ -261,8 +305,8 @@ public class JLTCController {
                 }
             }
         }
-        response.setErrorMsg("无法找到对应资源！");
-        response.setState("error");
+        response.setErrorMsg("该图纸没有PDF文件！");
+        response.setState("E");
         return response;
     }
 }

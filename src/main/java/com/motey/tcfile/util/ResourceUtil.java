@@ -48,6 +48,8 @@ public class ResourceUtil {
 	}
 
 	public String getResourceUrl(String path, boolean hasIpHort) throws UnsupportedEncodingException {
+		System.out.println("Data path is " + path);
+		System.out.println("Upload folder path is " + uploadFolder);
 
 		if(!path.startsWith(uploadFolder))return "";
 
@@ -66,6 +68,7 @@ public class ResourceUtil {
 					accessPath.replace("*", ""),
 					URLEncoder.encode(path,"utf-8"));
 		}
+		System.out.println("Upload folder path is " + uploadFolder);
 		return url;
 	}
 	 
