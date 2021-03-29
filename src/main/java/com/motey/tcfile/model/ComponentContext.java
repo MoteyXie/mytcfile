@@ -10,7 +10,10 @@ public class ComponentContext {
 	protected String owningUserPuid = "";
 	protected String owningUserId = "";
 	protected String owningUserName = "";
-	
+	protected String objectDesc = "";
+
+	public String getObjectDesc() {return objectDesc;}
+	public void setObjectDesc(String objectDesc) {this.objectDesc = objectDesc;}
 	public String getOwningUserPuid() {
 		return owningUserPuid;
 	}

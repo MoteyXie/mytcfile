@@ -6,14 +6,10 @@ import com.motey.tcfile.model.*;
 import com.motey.tcfile.services.DBService;
 import com.motey.tcfile.util.*;
 import com.teamcenter.soa.client.model.ModelObject;
-import com.teamcenter.soa.client.model.strong.Dataset;
 import com.teamcenter.soa.client.model.strong.ImanFile;
-import com.teamcenter.soa.client.model.strong.Item;
-import com.teamcenter.soa.client.model.strong.ItemRevision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -162,60 +158,67 @@ public class JLTCController {
         response.setPartNo(partNo);
 
         ComponentMapper componentMapper = taskService.getComponentMapper();
-        SoaSession soaSession = SoaSessionManager.getSession(
-                teamcenterContext.getTc_address(),
-                teamcenterContext.getTc_port(),
-                teamcenterContext.getUser(),
-                teamcenterContext.getPass());
-        soaSession.refreshCache();
-        SoaItemUtil itemUtil = new SoaItemUtil(soaSession);
+//        SoaSession soaSession = SoaSessionManager.getSession(
+//                teamcenterContext.getTc_address(),
+//                teamcenterContext.getTc_port(),
+//                teamcenterContext.getUser(),
+//                teamcenterContext.getPass());
+//        soaSession.refreshCache();
+//        SoaItemUtil itemUtil = new SoaItemUtil(soaSession);
+//        Item item = itemUtil.findItem(partNo);
+        ItemComponentContext partItemComponentContext = componentMapper.askItemComponentContext(null, partNo);
 
-        Item item = itemUtil.findItem(partNo);
-
-//        ItemComponentContext itemComponentContext = componentMapper.askItemComponentContext(null, partNo);
-
-        if (item == null) {
+        if (partItemComponentContext == null) {
             //查询结果为空时的处理
             response.setErrorMsg("物料编码【" + partNo + "】未找到");
             response.setState("E");
             return response;
         } else {
-
-            SoaPropertyManager propertyManager = soaSession.getPropertyManager();
-            SoaDatasetUtil datasetUtil = new SoaDatasetUtil(soaSession);
-
-            ItemRevision itemRevision = null;
+            //SoaPropertyManager propertyManager = soaSession.getPropertyManager();
+            //SoaDatasetUtil datasetUtil = new SoaDatasetUtil(soaSession);
+            //ItemRevision itemRevision = null;
+            String partItemId = partItemComponentContext.getItemId();
+            ItemRevisionComponentContext itemRevisionComponentContext = null;
             //获取版本
-            if (partRevNo != null && partRevNo.length() > 0) {
-                itemRevision = itemUtil.getItemRevision(item, partRevNo);
-            } else {
-                ItemRevision[] itemRevisions = itemUtil.getDisplayableItemRevisions(item);
-                itemRevision = itemRevisions == null || itemRevisions.length == 0 ? null : itemRevisions[0];
+//            if (partRevNo != null && partRevNo.length() > 0) {
+//                //itemRevision = itemUtil.getItemRevision(item, partRevNo);
+//            } else {
+//                ItemRevision[] itemRevisions = itemUtil.getDisplayableItemRevisions(item);
+//                itemRevision = itemRevisions == null || itemRevisions.length == 0 ? null : itemRevisions[0];
+//            }
+            //通过查询数据库获取物料版本
+            List<ItemRevisionComponentContext> rets = componentMapper.askItemRevisionComponentContext(null, partItemId, partRevNo, false);
+            if(rets != null && rets.size() > 0){
+                itemRevisionComponentContext = rets.get(0);
             }
 
-            if (itemRevision == null) {
+            if (itemRevisionComponentContext == null) {
                 //itemRevision为空时的处理
                 response.setErrorMsg("物料编码【" + partNo + "】下未找到可用版本。");
                 response.setState("E");
                 return response;
             }
-
-            String itemId = propertyManager.getStringProperty(itemRevision, "item_id");
-            String name = propertyManager.getStringProperty(itemRevision, "object_name");
-            String itemRevisionId = propertyManager.getStringProperty(itemRevision, "item_revision_id");
+//
+//            String itemId = propertyManager.getStringProperty(itemRevision, "item_id");
+//            String name = propertyManager.getStringProperty(itemRevision, "object_name");
+//            String itemRevisionId = propertyManager.getStringProperty(itemRevision, "item_revision_id");
+            String itemId = itemRevisionComponentContext.getItemId();
+            String name = itemRevisionComponentContext.getObjectName();
+            String itemRevisionId = itemRevisionComponentContext.getItemRevId();
 
             System.out.println("PartRevision is " +itemId+"/"+itemRevisionId+":"+name);
             String drawNo = null;
 
             //先通过图料关联关系查找图纸,如果没有搭建图料关系通过物料描述的第二段进行查找
-            soaSession.getPropertyManager().refreshObject(itemRevision);
+            //soaSession.getPropertyManager().refreshObject(itemRevision);
 
             //改为通过数据库查找图料关系
             //ModelObject[] designObjects = propertyManager.getRepresented_By(itemRevision);
             List<ItemRevisionComponentContext> designRevComponentContexts = componentMapper.askRepresentedByFromPart(itemId, itemRevisionId, "Design");
 
             if(designRevComponentContexts == null || designRevComponentContexts.size() == 0){
-                String partDesc = propertyManager.getStringProperty(itemRevision, "object_desc");
+                //String partDesc = propertyManager.getStringProperty(itemRevision, "object_desc");
+                String partDesc = itemRevisionComponentContext.getObjectDesc();
                 try {
                     drawNo = partDesc.split("\\\\")[1];
                 } catch (Exception e) {
@@ -225,9 +228,6 @@ public class JLTCController {
                 response.setState("M");
                 return response;
             }else if(designRevComponentContexts.size() == 1){
-                //soaSession.getPropertyManager().refreshObject(designObjects[0]);
-                //drawNo = propertyManager.getStringProperty(designObjects[0],"item_id");
-               // String type = propertyManager.getProperty(designObjects[0],"object_type").getStringValue();
                 drawNo = designRevComponentContexts.get(0).getItemId();
                 String type = designRevComponentContexts.get(0).getObjectTypeName();
                 System.out.println("图纸类型：" + type);
@@ -240,9 +240,13 @@ public class JLTCController {
             //改成坚朗专用的图纸对象获取方式
             //ModelObject[] designRevisions = propertyManager.getModelObjectArrayProperty(itemRevision, "TC_Is_Represented_By");
             //TODO 获取之前先判断物料关联的图纸有几个？如果有多个的话就不继续了
-            ModelObject designItem = drawNo == null || drawNo.isEmpty() ? null : itemUtil.findItem(drawNo);
+            //ModelObject designItem = drawNo == null || drawNo.isEmpty() ? null : itemUtil.findItem(drawNo);
+            ItemComponentContext designItemContext = null;
+            if(drawNo != null){
+                designItemContext = componentMapper.askItemComponentContext(null, drawNo);
+            }
 //            propertyManager.refreshObject(designItem);
-            if (designItem == null) {
+            if (designItemContext == null) {
                 //关联图纸对象为空时的处理
                 response.setErrorMsg("未找到关联图纸");
                 response.setState("W");
@@ -250,23 +254,33 @@ public class JLTCController {
             }
 
             //获取最大已发布版本
-            soaSession.getPropertyManager().refreshObject(designItem);
-            ItemRevision designRevision = itemUtil.getLatestReleasedItemRevision((Item)designItem);
-            if (designRevision == null) {
+            //soaSession.getPropertyManager().refreshObject(designItem);
+            //ItemRevision designRevision = itemUtil.getLatestReleasedItemRevision((Item)designItem);
+            ItemRevisionComponentContext designRevisionContext = null;
+            List<ItemRevisionComponentContext> revs = componentMapper.askItemRevisionComponentContext(null, drawNo, null, true);
+            if(revs != null && revs.size() > 0){
+                designRevisionContext = revs.get(0);
+            }
+            if (designRevisionContext == null) {
                 //关联图纸对象为空时的处理
                 response.setErrorMsg("未找到已发布的图纸版本");
                 response.setState("W");
                 return response;
             }
-            soaSession.getPropertyManager().refreshObject(designRevision);
-            String designRevNo = propertyManager.getStringProperty(designRevision, "item_revision_id");
-            String designName = propertyManager.getStringProperty(designRevision, "object_name");
-            String designStr = propertyManager.getStringProperty(designRevision, "object_string");
+//            soaSession.getPropertyManager().refreshObject(designRevision);
+//            String designRevNo = propertyManager.getStringProperty(designRevision, "item_revision_id");
+//            String designName = propertyManager.getStringProperty(designRevision, "object_name");
+//            String designStr = propertyManager.getStringProperty(designRevision, "object_string");
+            String designRevNo = designRevisionContext.getItemRevId();
+            String designName = designRevisionContext.getObjectName();
+            String designStr = drawNo + "/" + designRevNo + "-" + designName;
             response.setDrawingNo(drawNo);
             response.setDrawingRevNo(designRevNo);
             response.setDrawingName(designName);
 
-            List<ModelObject> relateds = itemUtil.getRelatedComponents(designRevision, "IMAN_specification", "IMAN_reference", "IMAN_Rendering");
+            //List<ModelObject> relateds = itemUtil.getRelatedComponents(designRevision, "IMAN_specification", "IMAN_reference", "IMAN_Rendering");
+
+            Map<String, ComponentContext> relateds = componentMapper.askReferences(designRevisionContext.getObjectPuid());
 
             if (relateds == null || relateds.size() == 0) {
                 response.setErrorMsg("图纸【" + designStr + "】未找到关联图纸数据集");
@@ -274,42 +288,71 @@ public class JLTCController {
                 return response;
             }
 
-            //TODO 找到数据集下载下来后显示
-            for (int k = 0; k < relateds.size(); k++) {
+            for (ComponentContext related : relateds.values()) {
 
-                ModelObject related = relateds.get(k);
+                    if("Dataset".equals(related.getObjectTypeClass())){
+//                    if(componentMapper.isDataset(related.getObjectPuid())){
+                        List<ImanFileContext> imanFiles = componentMapper.askImanFiles(related.getObjectPuid());
 
-                if (related instanceof Dataset) {
+                        if (imanFiles != null && imanFiles.size() > 0) {
 
-                    String rname = propertyManager.getStringProperty(related, "object_string");
-                    System.out.println("related name = " + rname);
+                            for (ImanFileContext imanFileContext : imanFiles) {
 
-                    List<ImanFile> imanFiles = datasetUtil.getImanFiles(related);
+                                String fileName = imanFileContext.getOriginalFileName();
 
-                    if (imanFiles != null && imanFiles.size() > 0) {
-
-                        for (ImanFile imanFile : imanFiles) {
-
-                            String fileName = propertyManager.getStringProperty(imanFile, "original_file_name");
-                            String fileSize = propertyManager.getStringProperty(imanFile, "file_size");
-                            String mimeType = propertyManager.getStringProperty(imanFile, "mime_type");
-
-                            if(fileName.toUpperCase().endsWith(".PDF")) {
-                                //String path = datasetUtil.download(imanFile, resourceUtil.getUploadFolder());
-                                //TODO 换成下载imanFile的链接
-                                //String url = resourceUtil.getResourceUrl(path);
-                                Map<String, String> params = new HashMap<>();
-                                params.put("uid", imanFile.getUid());
-                                String url = resourceUtil.getHttpUrl("showImanFile", params);
+                                if(fileName.toUpperCase().endsWith(".PDF")) {
+                                    //String path = datasetUtil.download(imanFile, resourceUtil.getUploadFolder());
+                                    //TODO 换成下载imanFile的链接
+                                    //String url = resourceUtil.getResourceUrl(path);
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put("uid", imanFileContext.getObjectPuid());
+                                    String url = resourceUtil.getHttpUrl("showImanFile", params);
 //                                return "redirect:" + url;
-                                response.setState("S");
-                                response.setUrl(url);
-                                return response;
+                                    response.setState("S");
+                                    response.setUrl(url);
+                                    return response;
+                                }
                             }
                         }
                     }
-                }
             }
+
+            //TODO 找到数据集下载下来后显示
+//            for (int k = 0; k < relateds.size(); k++) {
+//
+//                ModelObject related = relateds.get(k);
+//
+//                if (related instanceof Dataset) {
+//
+//                    String rname = propertyManager.getStringProperty(related, "object_string");
+//                    System.out.println("related name = " + rname);
+//
+//                    List<ImanFile> imanFiles = datasetUtil.getImanFiles(related);
+//
+//                    if (imanFiles != null && imanFiles.size() > 0) {
+//
+//                        for (ImanFile imanFile : imanFiles) {
+//
+//                            String fileName = propertyManager.getStringProperty(imanFile, "original_file_name");
+//                            String fileSize = propertyManager.getStringProperty(imanFile, "file_size");
+//                            String mimeType = propertyManager.getStringProperty(imanFile, "mime_type");
+//
+//                            if(fileName.toUpperCase().endsWith(".PDF")) {
+//                                //String path = datasetUtil.download(imanFile, resourceUtil.getUploadFolder());
+//                                //TODO 换成下载imanFile的链接
+//                                //String url = resourceUtil.getResourceUrl(path);
+//                                Map<String, String> params = new HashMap<>();
+//                                params.put("uid", imanFile.getUid());
+//                                String url = resourceUtil.getHttpUrl("showImanFile", params);
+////                                return "redirect:" + url;
+//                                response.setState("S");
+//                                response.setUrl(url);
+//                                return response;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
         response.setErrorMsg("该图纸没有PDF文件！");
         response.setState("E");
