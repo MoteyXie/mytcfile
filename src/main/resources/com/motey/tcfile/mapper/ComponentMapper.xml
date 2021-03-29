@@ -1,0 +1,164 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.motey.tcfile.mapper.ComponentMapper">
+	<select id="askReferences" resultType="ComponentContext">
+		select
+		    rtype.ptype_name as relationType,
+		    objtype.ptype_class as objectTypeClass,
+		    relation.rsecondary_objectu as objectPuid,
+		    pwo.pobject_name as objectName,
+		    pwo.pobject_type as objectTypeName,
+		    puser.puid as owningUserPuid,
+            puser.puser_name as owningUserName,
+            puser.puser_id as owningUserId
+		from
+		    pimanrelation relation,
+		    pimantype rtype,
+		    pworkspaceobject pwo,
+		    pimantype objtype,
+		    ppom_application_object pomObj,
+            ppom_user puser
+		where
+		    relation.rprimary_objectu=#{parentPuid}
+		    and relation.rrelation_typeu=rtype.puid
+		    and relation.rsecondary_objectu=pwo.puid
+		    and objtype.ptype_name = pwo.pobject_type
+		    and pomObj.puid = pwo.puid
+            and pomObj.rowning_useru = puser.puid
+		    order by rtype.ptype_name asc
+	</select>
+	<select id="askContents" resultType="ComponentContext">
+		select 
+		    childObj.puid as objectPuid,
+		    childObj.pobject_name as objectName,
+		    childObj.pobject_type as objectTypeName,
+		    objtype.ptype_class as objectTypeClass,
+		    puser.puid as owningUserPuid,
+            puser.puser_name as owningUserName,
+            puser.puser_id as owningUserId
+		from
+		    pworkspaceobject obj,
+		    pcontents cont,
+		    pworkspaceobject childObj,
+		    pimantype objtype,
+		    ppom_application_object pomObj,
+            ppom_user puser
+		where 
+		    obj.puid=#{parentPuid}
+		    and obj.puid = cont.puid
+		    and childObj.puid = cont.pvalu_0
+		    and objtype.ptype_name = childObj.pobject_type
+		    and pomObj.puid = obj.puid
+            and pomObj.rowning_useru = puser.puid
+	</select>
+	<select id="askComponentContext" resultType="ComponentContext">
+		select 
+		    obj.puid as objectPuid,
+		    obj.pobject_name as objectName,
+		    obj.pobject_type as objectTypeName,
+		    objtype.ptype_class as objectTypeClass,
+		    puser.puid as owningUserPuid,
+            puser.puser_name as owningUserName,
+            puser.puser_id as owningUserId
+		from
+		    pworkspaceobject obj,
+		    pimantype objtype,
+		    ppom_application_object pomObj,
+            ppom_user puser
+		where 
+		    obj.puid=#{puid}
+		    and objtype.ptype_name = obj.pobject_type
+		    and pomObj.puid = obj.puid
+            and pomObj.rowning_useru = puser.puid
+	</select>
+	<select id="askItemComponentContext" resultType="ItemComponentContext">
+		select 
+		    obj.puid as objectPuid,
+		    item.pitem_id as itemId,
+		    obj.pobject_name as objectName,
+		    obj.pobject_type as objectTypeName,
+		    objtype.ptype_class as objectTypeClass,
+		    puser.puid as owningUserPuid,
+            puser.puser_name as owningUserName,
+            puser.puser_id as owningUserId
+		from
+		    pworkspaceobject obj,
+		    pitem item,
+		    pimantype objtype,
+		    ppom_application_object pomObj,
+            ppom_user puser
+		where
+			item.puid = obj.puid
+			<if test="puid != null and puid.length > 0">
+				and obj.puid=#{puid}
+			</if>
+			<if test="itemId != null and itemId.length > 0">
+				and item.pitem_id=#{itemId}
+			</if>
+		    and objtype.ptype_name = obj.pobject_type
+		    and pomObj.puid = obj.puid
+            and pomObj.rowning_useru = puser.puid
+	</select>
+	<select id="askItemRevisionComponentContext" resultType="ItemRevisionComponentContext">
+		select 
+		    obj.puid as objectPuid,
+		    item.pitem_id as itemId,
+		    itemrev.pitem_revision_id as itemRevId,
+		    obj.pobject_name as objectName,
+		    obj.pobject_type as objectTypeName,
+		    objtype.ptype_class as objectTypeClass,
+		    puser.puid as owningUserPuid,
+            puser.puser_name as owningUserName,
+            puser.puser_id as owningUserId
+		from
+		    pworkspaceobject obj,
+		    pitem item,
+		    pitemrevision itemrev,
+		    pimantype objtype,
+		    ppom_application_object pomObj,
+            ppom_user puser
+		where 
+		    obj.puid=#{puid}
+		    and itemrev.puid = obj.puid
+		    and itemrev.ritems_tagu = item.puid
+		    and objtype.ptype_name = obj.pobject_type
+		    and pomObj.puid = obj.puid
+            and pomObj.rowning_useru = puser.puid
+	</select>
+	<select id="askField" resultType="java.lang.String">
+		select 
+		    ${fieldName}
+		from
+		    ${tableName}
+		where 
+		    puid=#{puid}
+	</select>
+	<select id="askRepresentedByFromPart" resultType="ItemRevisionComponentContext">
+		SELECT
+			distinct ITEMREV.PUID,
+			WO.POBJECT_NAME as objectName,
+			WO.POBJECT_TYPE as objectTypeName,
+			ITEM.PITEM_ID as itemId,
+			ITEMREV.PITEM_REVISION_ID as itemRevId,
+			ITEMREV.PUID as itemRevUid
+		FROM
+			PITEM PARTITEM,
+			PITEMREVISION PARTITEMREV,
+			PIMANRELATION IR,
+			PWORKSPACEOBJECT WO,
+			PITEMREVISION ITEMREV,
+			PITEM ITEM
+		WHERE
+			PARTITEM.PITEM_ID = #{partId}
+		AND PARTITEMREV.PITEM_REVISION_ID = #{partRevId}
+		AND PARTITEMREV.RITEMS_TAGU = PARTITEM.PUID
+		AND IR.rprimary_objectu=PARTITEMREV.PUID
+		AND ir.rsecondary_objectu=WO.PUID
+		AND ITEMREV.PUID = WO.PUID
+		AND ITEMREV.RITEMS_TAGU = ITEM.PUID
+		<if test="objectTypeName != null">
+			AND WO.POBJECT_TYPE LIKE '%${objectTypeName}%'
+		</if>
+	</select>
+</mapper>

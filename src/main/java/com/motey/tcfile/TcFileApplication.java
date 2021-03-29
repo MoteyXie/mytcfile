@@ -1,9 +1,11 @@
 package com.motey.tcfile;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan(basePackages="com.motey.tcfile.mapper")
 public class TcFileApplication {
 
     public static void main(String[] args) {

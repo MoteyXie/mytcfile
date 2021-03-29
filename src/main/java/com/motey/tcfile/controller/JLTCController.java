@@ -1,9 +1,9 @@
 package com.motey.tcfile.controller;
 
 import com.motey.tcfile.TeamcenterContext;
-import com.motey.tcfile.model.JLAskDrawingFromPartResponse;
-import com.motey.tcfile.model.JLAskDrawingFromPartResponses;
-import com.motey.tcfile.model.X_DATA_TBL;
+import com.motey.tcfile.mapper.ComponentMapper;
+import com.motey.tcfile.model.*;
+import com.motey.tcfile.services.DBService;
 import com.motey.tcfile.util.*;
 import com.teamcenter.soa.client.model.ModelObject;
 import com.teamcenter.soa.client.model.strong.Dataset;
@@ -35,6 +35,9 @@ public class JLTCController {
 
     @Resource
     private ResourceUtil resourceUtil;
+
+    @Autowired
+    DBService taskService;
 
     @Autowired
     public void setTeamcenterContext(TeamcenterContext teamcenterContext) {
@@ -158,6 +161,7 @@ public class JLTCController {
 
         response.setPartNo(partNo);
 
+        ComponentMapper componentMapper = taskService.getComponentMapper();
         SoaSession soaSession = SoaSessionManager.getSession(
                 teamcenterContext.getTc_address(),
                 teamcenterContext.getTc_port(),
@@ -167,6 +171,8 @@ public class JLTCController {
         SoaItemUtil itemUtil = new SoaItemUtil(soaSession);
 
         Item item = itemUtil.findItem(partNo);
+
+//        ItemComponentContext itemComponentContext = componentMapper.askItemComponentContext(null, partNo);
 
         if (item == null) {
             //查询结果为空时的处理
@@ -203,39 +209,39 @@ public class JLTCController {
 
             //先通过图料关联关系查找图纸,如果没有搭建图料关系通过物料描述的第二段进行查找
             soaSession.getPropertyManager().refreshObject(itemRevision);
-            ModelObject[] designObjects = propertyManager.getRepresented_By(itemRevision);
-            if (designObjects.length>1){
+
+            //改为通过数据库查找图料关系
+            //ModelObject[] designObjects = propertyManager.getRepresented_By(itemRevision);
+            List<ItemRevisionComponentContext> designRevComponentContexts = componentMapper.askRepresentedByFromPart(itemId, itemRevisionId, "Design");
+
+            if(designRevComponentContexts == null || designRevComponentContexts.size() == 0){
+                String partDesc = propertyManager.getStringProperty(itemRevision, "object_desc");
+                try {
+                    drawNo = partDesc.split("\\\\")[1];
+                } catch (Exception e) {
+                }
+            }else if (designRevComponentContexts.size() > 1){
                 response.setErrorMsg("物料编码【" + partNo + "】关联了多个图纸。");
                 response.setState("M");
                 return response;
-            }if(designObjects.length ==1){
-                soaSession.getPropertyManager().refreshObject(designObjects[0]);
-                drawNo = propertyManager.getStringProperty(designObjects[0],"item_id");
-                String type = propertyManager.getProperty(designObjects[0],"object_type").getStringValue();
+            }else if(designRevComponentContexts.size() == 1){
+                //soaSession.getPropertyManager().refreshObject(designObjects[0]);
+                //drawNo = propertyManager.getStringProperty(designObjects[0],"item_id");
+               // String type = propertyManager.getProperty(designObjects[0],"object_type").getStringValue();
+                drawNo = designRevComponentContexts.get(0).getItemId();
+                String type = designRevComponentContexts.get(0).getObjectTypeName();
                 System.out.println("图纸类型：" + type);
                 if(type.equals("K8_EDesignRevision")){
                     response.setErrorMsg("图纸ID【" + drawNo + "】为工程图，类型错误。");
                     response.setState("W");
                     return response;
                 }
-            }else{
-                String partDesc = propertyManager.getStringProperty(itemRevision, "object_desc");
-//              System.out.println("partDesc " + partDesc);
-                try {
-//              String temp = partDesc.substring(partDesc.indexOf("\\")+1);
-                    drawNo = partDesc.split("\\\\")[1];
-                } catch (Exception e) {
-
-                }
             }
             //改成坚朗专用的图纸对象获取方式
             //ModelObject[] designRevisions = propertyManager.getModelObjectArrayProperty(itemRevision, "TC_Is_Represented_By");
             //TODO 获取之前先判断物料关联的图纸有几个？如果有多个的话就不继续了
-
             ModelObject designItem = drawNo == null || drawNo.isEmpty() ? null : itemUtil.findItem(drawNo);
-
 //            propertyManager.refreshObject(designItem);
-
             if (designItem == null) {
                 //关联图纸对象为空时的处理
                 response.setErrorMsg("未找到关联图纸");
