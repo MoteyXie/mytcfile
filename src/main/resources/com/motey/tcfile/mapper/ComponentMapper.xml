@@ -176,7 +176,7 @@
 		AND ITEMREV.PUID = WO.PUID
 		AND ITEMREV.RITEMS_TAGU = ITEM.PUID
 		<if test="objectTypeName != null">
-			AND WO.POBJECT_TYPE LIKE '%${objectTypeName}%'
+			AND UPPER(WO.POBJECT_TYPE) LIKE UPPER('%${objectTypeName}%')
 		</if>
 	</select>
 	<select id="isDataset" resultType="java.lang.Boolean">
